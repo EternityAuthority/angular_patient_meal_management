@@ -1,0 +1,126 @@
+/*!
+ * Copyright (c) Akveo 2019. All Rights Reserved.
+ * Licensed under the Single Application / Multi Application License.
+ * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+ */
+ @import '../../../@theme/styles/themes';
+ @import '~@nebular/theme/styles/core/mixins';
+ @include nb-install-component() {
+  //  button[nbButton] {
+  //    margin: 0.25rem;
+  //  }
+
+   input, nb-select {
+     width: 20rem;
+   }
+
+   nb-select {
+     display: block;
+   }
+
+   .container1 {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-around;
+   }
+
+   :host {
+     button {
+       @include nb-ltr(margin, 0 0.75rem 0 0);
+       @include nb-rtl(margin, 0 0 0 0.75rem);
+     }
+   }
+ }
+
+ .editBtn{
+  color: #BDC7D4 !important;
+  background: white !important;
+  border: 2px solid #BDC7D4 !important;
+ }
+
+ .newplanBtn{
+  color: #00b8ff !important;
+  background: white !important;
+  border: 2px solid #00b8ff !important;
+ }
+
+ .pswdBtn{
+  color: #00b8ff !important;
+  background: white !important;
+  border: 2px solid #00b8ff !important;
+  margin: 10px 0px 10px 0px;
+ }
+
+ nb-card nb-card-footer{
+   display: flex;
+ }
+
+ nb-card nb-card-footer .planBox{
+   width: 33%;
+   height: 250px;
+   margin-left: 20px;
+   margin-right: 20px;
+
+   .planContent{
+     padding: 30px;
+     font-weight: 600;
+   }
+ }
+
+ .vl{
+  border-left: 2px solid #EDF0F3;
+  height: 405px;
+ }
+
+ img{
+   height: 130px;
+   width: 130px;
+   border-radius: 100px;
+ }
+
+ .firstCol{
+  text-align: center;
+  height: 220px;
+ }
+
+ .profContainer{
+   margin-top: 10px;
+ }
+
+ .profilePic{
+  width: 100px;
+  background: #90A0B7;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 5px;
+ }
+
+ .admin{
+  color: white;
+  background: #90A0B7;
+  padding: 3px 10px 3px 10px;
+  border-radius: 6px;
+  margin-top: 2px;
+  display: inline-block;
+ }
+
+ .uploadbtn {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.uploadbtn input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+@media(max-width:1300px){
+  .vl{
+    display: none;
+  }
+}

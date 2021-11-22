@@ -1,0 +1,163 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait... Do not refresh or hit back button">
+    <nb-card-header>Update your plan</nb-card-header>
+
+    <div id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body ">
+                    <div class="d-flex justify-content-between align-items-center"> <span class="text-uppercase">Plan
+                            Details</span> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="d-flex flex-column"> <small>Name</small> <span
+                                    class="font-weight-bold">{{currentUser?.contactFirstName ? currentUser?.contactFirstName : ''}}
+                                    {{currentUser?.contactLastName ? currentUser?.contactLastName : ''}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex flex-column"> <small>Plan Expiry Date</small>
+                                <span *ngIf="!makePayment"
+                                    class="font-weight-bolder">{{currentUser?.planExpiryDate | date: 'dd/MM/yyyy'}}</span>
+                                <span *ngIf="makePayment"
+                                    class=" font-weight-bolder">{{planUpdate.newPlanExpiryDate | date: 'dd/MM/yyyy'}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="mt-3 d-flex flex-column"> <small>Plan</small> <span
+                                    class="font-weight-bolder">{{planUpdate?.description}}</span> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mt-3 d-flex flex-column"> <small>Plan duration</small> <span
+                                    class="font-weight-bolder">{{planUpdate?.interval}}</span> </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="makePayment">
+                        <div class="mt-3 text-center fee align-items-center">
+                            <h3 class="mb-0 font-weight-light">${{planUpdate?.paymentAmount}}</h3>
+                        </div>
+                        <form [formGroup]="paymentForm">
+                            <div class="mt-3 mr-2">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Card Number</small> <input type="text"
+                                                class="form-control" formControlName="cardNumber" minlength="16"
+                                                maxlength="19"
+                                                [ngStyle]="{'border': (cardNumber?.errors?.required || cardNumber?.errors?.pattern || cardNumber?.hasError('minlength')) && cardNumber.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                            <ngx-validation-message label="Card number"
+                                                [showRequired]="cardNumber?.errors?.required  && cardNumber.touched"
+                                                [showPattern]="cardNumber?.errors?.pattern  && cardNumber.touched"
+                                                [showMinLength]="cardNumber?.hasError('minlength') && cardNumber.touched"
+                                                minLength="16">
+                                            </ngx-validation-message>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Card Holder's Name</small> <input type="text"
+                                                class="form-control" formControlName="cardHolderName" maxlength="100"
+                                                [ngStyle]="{'border': (cardHolderName?.errors?.required || cardHolderName?.errors?.pattern || cardHolderName?.hasError('minlength')) && cardHolderName.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                            <ngx-validation-message label="Card holder's name"
+                                                [showRequired]="cardHolderName?.errors?.required  && cardHolderName.touched"
+                                                [showPattern]="cardHolderName?.errors?.pattern  && cardHolderName.touched"
+                                                [showMinLength]="cardHolderName?.hasError('minlength') && cardHolderName.touched"
+                                                minLength="2">
+                                            </ngx-validation-message>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mt-3">
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Country</small>
+                                            <select class="form-control" formControlName="country"
+                                                [ngStyle]="{'border': country?.errors?.required && country.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                                <option *ngFor="let country of countries" [value]="country.code">
+                                                    {{country.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <ngx-validation-message label="country"
+                                            [showRequired]="country?.errors?.required && country.touched">
+                                        </ngx-validation-message>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Address</small> <input type="text"
+                                                class="form-control" formControlName="address" maxlength="100"
+                                                [ngStyle]="{'border': (address?.errors?.required || address?.hasError('minlength')) && address.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                        </div>
+                                        <ngx-validation-message label="Address"
+                                            [showRequired]="address?.errors?.required  && address.touched"
+                                            [showMinLength]="address?.hasError('minlength') && address.touched"
+                                            minLength="2">
+                                        </ngx-validation-message>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mt-3">
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>City</small> <input type="text"
+                                                class="form-control" formControlName="city" maxlength="100"
+                                                [ngStyle]="{'border': (city?.errors?.required || city?.hasError('minlength')) && city.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                        </div>
+                                        <ngx-validation-message label="City"
+                                            [showRequired]="city?.errors?.required  && city.touched"
+                                            [showMinLength]="city?.hasError('minlength') && city.touched" minLength="2">
+                                        </ngx-validation-message>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Month</small>
+                                            <select class="form-control" formControlName="month"
+                                                [ngStyle]="{'border': month?.errors?.required && month.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                                <option *ngFor="let month of months" [value]="month">{{month}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <ngx-validation-message label="Month"
+                                            [showRequired]="month?.errors?.required && month.touched">
+                                        </ngx-validation-message>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 mr-2">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>Year</small>
+                                            <select class="form-control" formControlName="year"
+                                                [ngStyle]="{'border': year?.errors?.required && year.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                                <option *ngFor="let year of years" [value]="year">{{year}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <ngx-validation-message label="Year"
+                                            [showRequired]="year?.errors?.required && year.touched">
+                                        </ngx-validation-message>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="inputbox"> <small>CVV</small> <input type="text"
+                                                class="form-control" formControlName="cvv" maxlength="4"
+                                                [ngStyle]="{'border': (cvv?.errors?.required || cvv?.errors?.pattern || cvv?.hasError('minlength')) && cvv.touched ? '1px solid red' : '1px solid #00b8ff'}">
+                                        </div>
+                                        <ngx-validation-message label="CVV"
+                                            [showRequired]="cvv?.errors?.required && cvv.touched"
+                                            [showPattern]="cvv?.errors?.pattern  && cvv.touched"
+                                            [showMinLength]="cvv?.hasError('minlength') && cvv.touched" minLength=3>
+                                        </ngx-validation-message>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <hr class="mr-2 mt-4">
+                    <div style="text-align: center;">
+                        <button *ngIf="makePayment" class="ml-2 btn btn-primary pay" (click)="makePlanPayment()"><b>PAY
+                                NOW</b></button>
+                        <button *ngIf="!makePayment" class="ml-2 btn btn-primary pay"
+                            (click)="updatePlanDetails()"><b>UPDATE PLAN</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nb-card>

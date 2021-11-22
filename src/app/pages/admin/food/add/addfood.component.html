@@ -1,0 +1,95 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+  nbSpinnerMessage="Please wait...">
+  <nb-card-header>{{mode}} Food
+    <span style="float:right; display: inline-grid;"> <button class="addNutrient" nbButton (click)="addNutrient()">
+        <nb-icon icon="plus-outline"></nb-icon>Nutrient
+      </button>
+      <span style="font-size: 12px;">All units are as per 100g of food</span>
+    </span>
+  </nb-card-header>
+  <nb-card-body>
+    <div [formGroup]="foodForm" class="container">
+      <div class="column">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input nbInput id="name" formControlName="name"
+            [status]="(name?.errors?.required || name?.hasError('minlength') || name?.hasError('maxlength')) && name.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Name">
+          <ngx-validation-message label="Name" [showRequired]="name?.errors?.required  && name.touched"
+            [showMinLength]="name?.hasError('minlength') && name.touched"
+            [showMaxLength]="name?.hasError('maxlength') && name.touched" minLength=1 maxLength=250>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="foodgroup">Food Group</label>
+          <nb-select status="primary" formControlName="foodGroup">
+            <nb-option *ngFor="let group of foodGroups" [value]="group.id"> {{ group.name }}</nb-option>
+          </nb-select>
+          <ngx-validation-message label="Foodgroup" [showRequired]="foodGroup?.errors?.required  && foodGroup.touched">
+          </ngx-validation-message>
+        </div>
+
+       
+        <div class="form-group">
+          <label for="serve2">Serving Suggestion</label>
+          <textarea nbInput type="text" id="servingSuggestion" formControlName="servingSuggestion" rows="5" fullWidth shape="round" 
+            [status]="(servingSuggestion?.errors?.required || servingSuggestion?.hasError('minlength') || servingSuggestion?.hasError('maxlength')) && servingSuggestion.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Serving suggestion"></textarea>
+          <ngx-validation-message label="Serving medium"
+            [showRequired]="servingSuggestion?.errors?.required  && servingSuggestion.touched"
+            [showPattern]="servingSuggestion?.errors?.pattern  && servingSuggestion.touched">
+          </ngx-validation-message>
+        </div>
+
+       
+      </div>
+
+      <div class="column">
+        <form [formGroup]="nutrientsForm">
+          <div formArrayName="nutrients"
+            *ngFor="let nutrientControl of nutrientsForm.get('nutrients')['controls']; let i = index">
+            <div [formGroupName]="[i]" style="display: flex;">
+              <div class="form-group" style="margin-right: 10px;">
+                <label for="Nutrient">Nutrient</label>
+                <nb-select status="primary" formControlName="id"
+                  (selectedChange)="onItemSelect($event, nutrientControl)" #nv>
+                  <nb-option *ngFor="let nutrient of nutrientsList" [value]="nutrient.id"> {{ nutrient.name }}
+                  </nb-option>
+                </nb-select>
+                <ngx-validation-message label="Nutrient"
+                  [showRequired]="nutrientControl.controls.id?.errors?.required  && nutrientControl.controls.id?.touched">
+                </ngx-validation-message>
+              </div>
+
+              <div class="form-group">
+                <label for="serve3">Nutrient value</label>
+                <input nbInput type="number" id="nutValue" formControlName="value" class="form-control"
+                  placeholder="Nutrient value" maxlength="6">
+                <ngx-validation-message label="Nutrient value"
+                  [showRequired]="nutrientControl.controls.value?.errors?.required  && nutrientControl.controls.value?.touched"
+                  [showPattern]="nutrientControl.controls.value?.errors?.pattern  && nutrientControl.controls.value?.touched">
+                </ngx-validation-message>
+              </div>
+              <!-- <button nbButton (click)="removeNutrient(i, nutrientControl)">
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button> -->
+
+              <button nbButton ghost status="danger" (click)="removeNutrient(i, nutrientControl)">
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton status="primary" class="addNutrient" [disabled]="!foodForm.valid" (click)="save()"
+      hero>Submit</button>
+    <button nbButton status="info" class="addNutrient" (click)="back()" hero>Back</button>
+  </nb-card-footer>
+
+</nb-card>

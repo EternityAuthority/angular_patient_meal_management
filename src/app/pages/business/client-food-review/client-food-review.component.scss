@@ -1,0 +1,38 @@
+.daySelect{
+    text-align: center;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+  
+nb-card{
+    height: 600px;
+}
+
+.foodData{
+    margin-top: 50px
+}
+
+.btnDiv{
+    text-align: center;
+    width: 15%;
+    margin: auto;
+}
+
+.submit{
+  color: white !important;
+  background: #00b8ff !important;
+}
+
+.foodInfo{
+    color: darkgrey !important;
+}

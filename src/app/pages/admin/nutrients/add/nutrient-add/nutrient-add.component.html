@@ -1,0 +1,104 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+  nbSpinnerMessage="Please wait...">
+  <nb-card-header>{{mode}} Nutrient</nb-card-header>
+  <nb-card-body>
+    <div [formGroup]="nutrientForm" class="container">
+      <div class="column">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input nbInput id="name" formControlName="name"
+            [status]="(name?.errors?.required || name?.hasError('minlength') || name?.hasError('maxlength')) && name.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Name" maxlength="50">
+          <ngx-validation-message label="Name" [showRequired]="name?.errors?.required  && name.touched"
+            [showMinLength]="name?.hasError('minlength') && name.touched"
+            [showMaxLength]="name?.hasError('maxlength') && name.touched" minLength=1 maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Description</label>
+          <input nbInput id="name" formControlName="description"
+            [status]="(description?.errors?.required || description?.hasError('minlength') || description?.hasError('maxlength')) && description.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="description" maxlength="50">
+          <ngx-validation-message label="description"
+            [showRequired]="description?.errors?.required  && description.touched"
+            [showMinLength]="description?.hasError('minlength') && description.touched"
+            [showMaxLength]="description?.hasError('maxlength') && description.touched" minLength=1 maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="unit">Unit</label>
+          <nb-select status="primary" formControlName="unit">
+            <nb-option *ngFor="let unit of unitsArray" [value]="unit"> {{ unit }}
+            </nb-option>
+          </nb-select>
+          <ngx-validation-message label="Unit" [showRequired]="unit?.errors?.required  && unit?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="unit">Category</label>
+          <nb-select status="primary" formControlName="categoryId">
+            <nb-option *ngFor="let category of categories" [value]="category.id"> {{ category.name }}
+            </nb-option>
+          </nb-select>
+          <ngx-validation-message label="Category" [showRequired]="category?.errors?.required  && category?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="unit">Min (Recommended)</label>
+          <input nbInput id="name" formControlName="recommendedMin"
+            [status]="(recommendedMin?.errors?.required || recommendedMin?.hasError('minlength') || recommendedMin?.hasError('maxlength')) && recommendedMin.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Min value" maxlength="5">
+          <ngx-validation-message label="Min value"
+            [showRequired]="recommendedMin?.errors?.required && recommendedMin?.touched"
+            [showPattern]="recommendedMin?.errors?.pattern && recommendedMin?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="unit">Max (Recommended)</label>
+          <input nbInput id="name" formControlName="recommendedMax"
+            [status]="(recommendedMin?.errors?.required || recommendedMin?.hasError('minlength') || recommendedMin?.hasError('maxlength')) && recommendedMin.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Max value" maxlength="5">
+          <ngx-validation-message label="Max value"
+            [showRequired]="recommendedMax?.errors?.required && recommendedMax?.touched"
+            [showPattern]="recommendedMax?.errors?.pattern && recommendedMax?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="multiplier">Multiplier</label>
+          <input nbInput id="name" formControlName="multiplier"
+            [status]="(multiplier?.errors?.required || multiplier?.hasError('minlength') || multiplier?.hasError('maxlength')) && multiplier.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="multiplier value" maxlength="5">
+          <ngx-validation-message label="Max value"
+            [showRequired]="multiplier?.errors?.required && multiplier?.touched"
+            [showPattern]="multiplier?.errors?.pattern && multiplier?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="divisor">Divisor</label>
+          <input nbInput id="divisor" formControlName="divisor"
+            [status]="(divisor?.errors?.required || divisor?.hasError('minlength') || divisor?.hasError('maxlength')) && divisor.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="divisor value" maxlength="5">
+          <ngx-validation-message label="Max value"
+            [showRequired]="divisor?.errors?.required && divisor?.touched"
+            [showPattern]="divisor?.errors?.pattern && divisor?.touched">
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <button nbButton fullWidth [disabled]="!nutrientForm.valid" (click)="save()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="info" (click)="back()" hero>Back</button>
+  </nb-card-footer>
+
+</nb-card>

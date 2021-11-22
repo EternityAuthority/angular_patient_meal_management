@@ -1,0 +1,120 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait...">
+    <nb-card-header>{{mode}} Client</nb-card-header>
+    <nb-card-body>
+        <div [formGroup]="clientForm" class="container">
+            <div class="column">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input nbInput id="firstName" formControlName="firstName" minlength="1" maxlength="50"
+                        [status]="(firstName?.errors?.required || firstName?.hasError('minlength') || firstName?.hasError('maxlength')) && firstName.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="First name">
+                    <ngx-validation-message label="First Name"
+                        [showRequired]="firstName?.errors?.required  && firstName.touched"
+                        [showMinLength]="firstName?.hasError('minlength') && firstName.touched"
+                        [showMaxLength]="firstName?.hasError('maxlength') && firstName.touched" minLength=1
+                        maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input nbInput id="lastName" formControlName="lastName" minlength="1" maxlength="50"
+                        [status]="(lastName?.errors?.required || lastName?.hasError('minlength') || lastName?.hasError('maxlength')) && lastName.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Last name">
+                    <ngx-validation-message label="Last Name"
+                        [showRequired]="lastName?.errors?.required  && lastName.touched"
+                        [showMinLength]="lastName?.hasError('minlength') && lastName.touched"
+                        [showMaxLength]="lastName?.hasError('maxlength') && lastName.touched" minLength=1 maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input nbInput id="emailAddress" formControlName="emailAddress" #em minlength="1" maxlength="100"
+                        [status]="(emailAddress?.errors?.required || emailAddress?.hasError('minlength') || emailAddress?.hasError('maxlength')) && emailAddress.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Email">
+                    <ngx-validation-message label="Email"
+                        [showRequired]="emailAddress?.errors?.required  && emailAddress.touched"
+                        [showPattern]="emailAddress?.errors?.pattern  && emailAddress.touched"
+                        [showMinLength]="emailAddress?.hasError('minlength') && emailAddress.touched"
+                        [showMaxLength]="emailAddress?.hasError('maxlength') && emailAddress.touched" minLength=1
+                        maxLength=100>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group" *ngIf="!clientId">
+                    <label for="cnfemail">Confirm Email</label>
+                    <input nbInput id="cnfemail" formControlName="confirmEmail" #cnfEm class="form-control"
+                        placeholder="Confirm Email"
+                        [status]="(confirmEmail?.errors?.required || confirmEmail?.hasError('minlength') || confirmEmail?.hasError('maxlength')) && confirmEmail.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Confirm Email">
+                    <ngx-validation-message label="Confirm Email"
+                        [showEmailMatchError]="(em.value != cnfEm.value) && emailAddress.touched && confirmEmail.touched"
+                        minLength=8 maxLength=15>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group" *ngIf="clientId">
+                    <label for="status">Select Status</label>
+                    <nb-select id="status" status="primary" formControlName="status" class="from-control">
+                        <nb-option value="In progress">In progress</nb-option>
+                        <nb-option value="Done">Done</nb-option>
+                    </nb-select>
+                </div>
+
+                <div class="form-group">
+                    <label for="maxDays">Max Days for entering information</label>
+                    <nb-select placeholder="Max Days for entering information" formControlName="maxDays"
+                        status="primary">
+                        <nb-option value="1">1</nb-option>
+                        <nb-option value="2">2</nb-option>
+                        <nb-option value="3">3</nb-option>
+                        <nb-option value="4">4</nb-option>
+                        <nb-option value="5">5</nb-option>
+                        <nb-option value="6">6</nb-option>
+                        <nb-option value="7">7</nb-option>
+                    </nb-select>
+                </div>
+
+                <div class="form-group" *ngIf="clientId">
+                    <label for="gender">Gender</label>
+                    <nb-select placeholder="Gender" formControlName="gender" status="primary">
+                        <nb-option value="male">Male</nb-option>
+                        <nb-option value="female">Female</nb-option>
+                    </nb-select>
+                </div>
+
+                <div class="form-group" *ngIf="clientId">
+                    <label for="age">Age(yrs)</label>
+                    <input nbInput id="age" formControlName="age" maxlength="2"
+                        [status]="age?.errors?.pattern && age.touched ? 'danger' : 'primary'" class="form-control"
+                        placeholder="Age">
+                    <ngx-validation-message label="Age" [showPattern]="age?.errors?.pattern  && age.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group" *ngIf="clientId">
+                    <label for="height">Height(cms)</label>
+                    <input nbInput id="height" formControlName="height" maxlength="3"
+                        [status]="height?.errors?.pattern && height.touched ? 'danger' : 'primary'" class="form-control"
+                        placeholder="Height">
+                    <ngx-validation-message label="Height" [showPattern]="height?.errors?.pattern  && height.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group" *ngIf="clientId">
+                    <label for="weight">Weight(kg)</label>
+                    <input nbInput id="weight" formControlName="weight" maxlength="3"
+                        [status]="weight?.errors?.pattern && weight.touched ? 'danger' : 'primary'" class="form-control"
+                        placeholder="Weight">
+                    <ngx-validation-message label="Weight" [showPattern]="weight?.errors?.pattern  && weight.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <button nbButton fullWidth [disabled]="!clientForm.valid" (click)="saveData()" hero>Submit</button>
+            </div>
+        </div>
+
+    </nb-card-body>
+</nb-card>

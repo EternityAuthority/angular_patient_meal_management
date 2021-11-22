@@ -1,0 +1,19 @@
+<nb-card *ngIf="flag === 1">
+    <nb-card-header><b>Are you sure you want to {{title | lowercase}}?</b></nb-card-header>
+    <nb-card-footer>
+        <div>
+            <button class="btnNo" (click)="cancel()"><b>No</b></button>
+
+            <button class="btnYes" (click)="submit()"><b>Yes</b></button>
+        </div>
+    </nb-card-footer>
+</nb-card>
+
+<nb-card *ngIf="flag === 2">
+    <nb-card-header><b>{{title}}</b></nb-card-header>
+    <nb-card-footer>
+        <div>
+            <button class="btnNo" (click)="cancel()"><b>Ok</b></button>
+        </div>
+    </nb-card-footer>
+</nb-card>

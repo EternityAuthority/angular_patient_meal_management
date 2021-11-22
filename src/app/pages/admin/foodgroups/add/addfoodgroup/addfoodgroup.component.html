@@ -1,0 +1,40 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+  nbSpinnerMessage="Please wait...">
+  <nb-card-header>{{mode}} Food Group</nb-card-header>
+  <nb-card-body>
+    <div [formGroup]="foodgroupForm" class="container">
+      <div class="column">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input nbInput id="name" formControlName="name"
+            [status]="(name?.errors?.required || name?.hasError('minlength') || name?.hasError('maxlength')) && name.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Name">
+          <ngx-validation-message label="Name" [showRequired]="name?.errors?.required  && name.touched"
+            [showMinLength]="name?.hasError('minlength') && name.touched"
+            [showMaxLength]="name?.hasError('maxlength') && name.touched" minLength=1 maxLength=250>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Description</label>
+          <input nbInput id="name" formControlName="description"
+            [status]="(description?.errors?.required || description?.hasError('minlength') || description?.hasError('maxlength')) && description.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Description">
+          <ngx-validation-message label="Description"
+            [showRequired]="description?.errors?.required  && description.touched"
+            [showMinLength]="description?.hasError('minlength') && description.touched"
+            [showMaxLength]="description?.hasError('maxlength') && description.touched" minLength=1 maxLength=100>
+          </ngx-validation-message>
+        </div>
+        <div class="form-group">
+          <button fullWidth nbButton status="primary" [disabled]="!foodgroupForm.valid" (click)="save()" hero>Submit</button>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+
+    <button nbButton status="info" (click)="back()" hero>Back</button>
+  </nb-card-footer>
+
+</nb-card>

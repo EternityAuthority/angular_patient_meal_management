@@ -1,0 +1,12 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait...">
+    <nb-card-header>
+        Invoices
+        <button nbButton class="back" [routerLink]="['/pages/business/my-account']">Back to my account</button>
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table class="invoices-smart-table" [settings]="settings" [source]="source">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

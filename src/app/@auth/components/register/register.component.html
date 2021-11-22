@@ -1,0 +1,134 @@
+<!--
+  ~ Copyright (c) Akveo 2019. All Rights Reserved.
+  ~ Licensed under the Single Application / Multi Application License.
+  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+  -->
+
+<h1 id="title" class="title">NutriCalc</h1>
+
+<nb-card>
+  <nb-card-header>Register your business</nb-card-header>
+
+  <nb-card-body>
+    <div [formGroup]="businessForm" class="container">
+      <div class="column">
+        <div class="form-group">
+          <label for="plan">Select Plan</label>
+          <nb-select id="plan" status="primary" formControlName="planId" class="from-control">
+              <nb-option *ngFor="let plan of businessPlans" [value]="plan.id">
+                  {{plan.description}} -
+                  ${{ plan.price }} {{plan.interval}}
+                  up to {{plan.maxCustomers}} customers
+              </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Business Name</label>
+          <input nbInput id="name" formControlName="companyName" minlength="1" maxlength="50"
+            [status]="(companyName?.errors?.required || companyName?.hasError('minlength') || companyName?.hasError('maxlength')) && companyName.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Business name">
+          <ngx-validation-message label="Business Name"
+            [showRequired]="companyName?.errors?.required  && companyName.touched"
+            [showMinLength]="companyName?.hasError('minlength') && companyName.touched"
+            [showMaxLength]="companyName?.hasError('maxlength') && companyName.touched" minLength=1 maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input nbInput id="firstName" formControlName="contactFirstName" minlength="1" maxlength="50"
+            [status]="(contactFirstName?.errors?.required || contactFirstName?.hasError('minlength') || contactFirstName?.hasError('maxlength')) && contactFirstName.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="First name">
+          <ngx-validation-message label="First Name"
+            [showRequired]="contactFirstName?.errors?.required  && contactFirstName.touched"
+            [showMinLength]="contactFirstName?.hasError('minlength') && contactFirstName.touched"
+            [showMaxLength]="contactFirstName?.hasError('maxlength') && contactFirstName.touched" minLength=1
+            maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="contactLastName">Last Name</label>
+          <input nbInput id="contactLastName" formControlName="contactLastName" minlength="1" maxlength="50"
+            [status]="(contactLastName?.errors?.required || contactLastName?.hasError('minlength') || contactLastName?.hasError('maxlength')) && contactLastName.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Last name">
+          <ngx-validation-message label="Last Name"
+            [showRequired]="contactLastName?.errors?.required  && contactLastName.touched"
+            [showMinLength]="contactLastName?.hasError('minlength') && contactLastName.touched"
+            [showMaxLength]="contactLastName?.hasError('maxlength') && contactLastName.touched" minLength=1
+            maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input nbInput id="email" formControlName="contactEmail" #em minlength="1" maxlength="100"
+            [status]="(contactEmail?.errors?.required || contactEmail?.hasError('minlength') || contactEmail?.hasError('maxlength')) && contactEmail.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Email">
+          <ngx-validation-message label="Email" [showRequired]="contactEmail?.errors?.required  && contactEmail.touched"
+            [showPattern]="contactEmail?.errors?.pattern  && contactEmail.touched"
+            [showMinLength]="contactEmail?.hasError('minlength') && contactEmail.touched"
+            [showMaxLength]="contactEmail?.hasError('maxlength') && contactLastName.touched" minLength=1 maxLength=100>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="cnfemail">Confirm Email</label>
+          <input nbInput id="cnfemail" formControlName="confirmEmail" #cnfEm class="form-control"
+            placeholder="Confirm Email"
+            [status]="(confirmEmail?.errors?.required || confirmEmail?.hasError('minlength') || confirmEmail?.hasError('maxlength')) && confirmEmail.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Confirm Email">
+          <ngx-validation-message label="Confirm Email"
+            [showEmailMatchError]="(em.value != cnfEm.value) && contactEmail.touched && confirmEmail.touched"
+            minLength=8 maxLength=15>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Contact Phone</label>
+          <input nbInput id="contact" formControlName="contactPhone" maxlength="50" minlength="8"
+            [status]="(contactPhone?.errors?.required || contactPhone?.hasError('minlength') || contactPhone?.hasError('maxlength')) && contactPhone.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Contact Phone">
+          <ngx-validation-message label="phone" [showRequired]="contactPhone?.errors?.required  && contactPhone.touched"
+            [showPattern]="contactPhone?.errors?.pattern  && contactPhone.touched"
+            [showMinLength]="contactPhone?.hasError('minlength') && contactPhone.touched"
+            [showMaxLength]="contactPhone?.hasError('maxlength') && contactPhone.touched" minLength=8 maxLength=50>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input nbInput id="password" formControlName="password" #psw
+            nbTooltip="Password must be 8-15 characters long and contains 1 upper case, 1 lower case and 1 numeric character."
+            [status]="(password?.errors?.required || password?.hasError('minlength') || password?.hasError('maxlength')) && password.touched ? 'danger' : 'primary'"
+            class="form-control" placeholder="Password" maxlength="15">
+          <ngx-validation-message label="Password" [showRequired]="password?.errors?.required  && password.touched"
+            [showPattern]="password?.errors?.pattern  && password.touched"
+            [showMinLength]="password?.hasError('minlength') && password.touched"
+            [showMaxLength]="password?.hasError('maxlength') && contactLastName.touched" minLength=8 maxLength=15>
+          </ngx-validation-message>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Confirm Password</label>
+          <input nbInput id="password" formControlName="confirmPassword" #cPsw class="form-control"
+            placeholder="Confirm Password" maxlength="15" [status]="'primary'">
+          <ngx-validation-message label="Confirm Password"
+            [showPasswordMatchError]="(psw.value != cPsw.value) && confirmPassword.touched && password.touched"
+            minLength=8 maxLength=15>
+          </ngx-validation-message>
+        </div>
+      </div>
+
+      <button nbButton fullWidth [disabled]="submitted || !businessForm.valid" status="primary" size="large"
+        (click)="createBusiness()" [class.btn-pulse]="submitted">
+        Register
+      </button>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<section class="another-action" aria-label="Sign in">
+  Already have an account? <a class="text-link" routerLink="../login"><b>Log in</b></a>
+</section>

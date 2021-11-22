@@ -1,0 +1,455 @@
+<div [ngStyle]="{'display': showForm === true ? 'block' : 'none'}">
+    <div class="header2">
+        <span><b>NutriCalc</b></span>
+    </div>
+    <nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+        nbSpinnerMessage="Please wait..." class="infoCard">
+        <nb-card-header>
+            Hi {{clientForm.controls.firstName.value | titlecase}}
+            {{clientForm.controls.lastName.value | titlecase}}, Please enter your basic information
+        </nb-card-header>
+        <nb-card-body>
+            <div [formGroup]="clientForm" class="container">
+                <div class="column">
+
+                    <div class="form-group">
+                        <h5>CHOOSE MEASUREMENT UNIT</h5>
+
+                        <div class="radio-group">
+
+                            <input nbInput id="metric" type="radio" (change)="changeUnits('metric');" name="units"
+                                checked />
+                            <label class="radio-label" for="metric">Metric</label>
+                            <input nbInput id="imperial" type="radio" (change)="changeUnits('imperial');"
+                                name="units" />
+                            <label class="radio-label" for="imperial">Imperial</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>SELECT GENDER</h5>
+                        <div class="radio-group">
+                            <input class="option-input" id="male" type="radio" name="gender" value="Male"
+                                (change)="updateGender('Male')" />
+                            <label class="radio-label large" for="male">
+                                Male
+                            </label>
+                            <input class="option-input" id="female" type="radio" name="gender" value="Female"
+                                (change)="updateGender('Female')" />
+                            <label class="radio-label large" for="female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+
+                    <h5>YOUR DETAILS</h5>
+
+                    <div class="form-group">
+                        <label for="age">Age (yrs)</label>
+                        <input nbInput id="age" formControlName="age" maxlength="2"
+                            [status]="age?.errors?.pattern && age.touched ? 'danger' : 'primary'"
+                            class="form-control size-large" placeholder="Age">
+                        <ngx-validation-message label="Age" [showPattern]="age?.errors?.pattern  && age.touched"
+                            [showRequired]="age?.errors?.required && age.touched">
+                        </ngx-validation-message>
+                    </div>
+
+                    <div class="form-group" *ngIf="isMetric">
+                        <label for="heightCm">Height Cm (cms)</label>
+                        <input nbInput id="heightCm" formControlName="heightCm" maxlength="3"
+                            [status]="heightCm?.errors?.pattern && heightCm.touched ? 'danger' : 'primary'"
+                            class="form-control size-large" placeholder="heightCm">
+                        <ngx-validation-message label="heightCm"
+                            [showPattern]="heightCm?.errors?.pattern  && heightCm.touched"
+                            [showRequired]="heightCm?.errors?.required && heightCm.touched">
+                        </ngx-validation-message>
+                    </div>
+
+                    <div class="form-group" *ngIf="isMetric">
+                        <label for="weightKg">Weight (kg)</label>
+                        <input nbInput id="weightKg" formControlName="weightKg" maxlength="3"
+                            [status]="weightKg?.errors?.pattern && weightKg.touched ? 'danger' : 'primary'"
+                            class="form-control size-large" placeholder="weightKg">
+                        <ngx-validation-message label="weightKg"
+                            [showPattern]="weightKg?.errors?.pattern  && weightKg.touched"
+                            [showRequired]="weightKg?.errors?.required && weightKg.touched">
+                        </ngx-validation-message>
+                    </div>
+
+                    <div class="row" *ngIf="!this.isMetric">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="heightFt">Height (ft) </label>
+                                <input nbInput id="heightFt" formControlName="heightFt" maxlength="1"
+                                    [status]="heightFt?.errors?.pattern && heightFt.touched ? 'danger' : 'primary'"
+                                    class="input-full-width size-small" placeholder="heightFt">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="heightIn">Height (in) </label>
+                                <input nbInput id="heightIn" formControlName="heightIn" maxlength="2"
+                                    [status]="heightIn?.errors?.pattern && heightIn.touched ? 'danger' : 'primary'"
+                                    class="input-full-width size-small" placeholder="heightIn">
+                                <ngx-validation-message label="heightFt"
+                                    [showPattern]="heightFt?.errors?.pattern  && weightLb.touched"
+                                    [showRequired]="heightFt?.errors?.required && weightLb.touched">
+                                </ngx-validation-message>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="!this.isMetric">
+                        <label for="weightLb">Weight (lb) </label>
+                        <input nbInput id="weightLb" formControlName="weightLb" maxlength="3" [ngModel]="weightLb.value"
+                            [status]="weightLb?.errors?.pattern && weightLb.touched ? 'danger' : 'primary'"
+                            class="form-control size-large" placeholder="weightLb">
+                        <ngx-validation-message label="weightLb"
+                            [showPattern]="weightLb?.errors?.pattern  && weightLb.touched"
+                            [showRequired]="weightLb?.errors?.required && weightLb.touched">
+                        </ngx-validation-message>
+                    </div>
+
+                    <h5>EXERCISE</h5>
+                    <div class="form-group">
+                        <label for="activityLevel">Please select your daily activity level</label>
+                        <select class="form-control" formControlName="activityLevel">
+                            <option *ngFor="let a of this.activityList" [value]="a.modifier"> {{a.name}} </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="excerciseLevel">Please select how intensely you exercise</label>
+                        <select class="form-control" formControlName="excerciseLevel">
+                            <option *ngFor="let a of this.intensityList" [value]="a.modifier"> {{a.name}} </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exerciseDays">How many days per week do you exercise?</label>
+                                <input nbInput id="exerciseDays" formControlName="exerciseDays" maxlength="1"
+                                    [status]="exerciseDays?.errors?.pattern && exerciseDays.touched ? 'danger' : 'primary'"
+                                    class="input-full-width size-small" placeholder="exerciseDays">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exerciseMins">How many minutes per day do you exercise?</label>
+                                <input nbInput id="exerciseMins" formControlName="exerciseMins" maxlength="2"
+                                    [status]="exerciseMins?.errors?.pattern && exerciseMins.touched ? 'danger' : 'primary'"
+                                    class="input-full-width size-small" placeholder="exerciseMins">
+                                <ngx-validation-message label="exerciseMins"
+                                    [showPattern]="exerciseMins?.errors?.pattern  && exerciseMins.touched"
+                                    [showRequired]="exerciseMins?.errors?.required && exerciseMins.touched">
+                                </ngx-validation-message>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button nbButton class="btn" fullWidth success (click)="recalculateForm()">Calculate
+                            stats</button>
+                    </div>
+                    <h5>BODY STATS</h5>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="stat-panel">
+                                <h3>BMI</h3>
+                                <h1>{{ this.bmi }}</h1>
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="stat-panel">
+                                <h3>BMR</h3>
+                                <h1>{{ this.bmr }}</h1>
+                                <p>CALORIES/DAY</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="stat-panel">
+                                <h3>TDEE</h3>
+                                <h1>{{ this.tdee }}</h1>
+                                <p>CALORIES/DAY</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button nbButton class="btn" fullWidth [disabled]="!clientForm.valid" hero
+                            (click)="updateClientInfo()">Submit your profile</button>
+                    </div>
+
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>
+
+<div class="container" [ngStyle]="{'display': showStepper === true ? 'block' : 'none'}">
+    <div class="header">
+        <span><b>Nutrient Calculator</b></span>
+    </div>
+
+    <nb-stepper #stepper>
+        <nb-step label="Get Started">
+            <nb-card class="card1">
+                <nb-card-header>
+                    <!-- <h4>Start here by searching for a meal</h4>
+                    <div class="searchbox">
+                        <span class="fa fa-search form-control-feedback searchIcon"></span>
+                        <input type="text" name="search" placeholder="Search for meal or ingredients">
+                    </div> -->
+                    <h4>How it works?</h4>
+                </nb-card-header>
+
+                <nb-card-body>
+                    <!-- <span class="hiw"><b>How it works</b></span> -->
+                    <div class="threeCards">
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-search fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>1. Search for meals</b></span><br>
+                                <br>
+                                <span>Start by searching for popular meals using our smart global search for nutrients
+                                    and meals.</span>
+                            </div>
+                        </div>
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-list-ul fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>2. Build your meals list</b></span><br><br>
+                                <span>Quickly add meals to your personal list. you can check out our info icons for more
+                                    details.</span>
+                            </div>
+                        </div>
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-check-circle fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>3. Review and send</b></span><br><br>
+                                <span>Review your list and send it over. Your nutritionist will be in touch with some
+                                    awesome reports.</span>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+
+                <div style="text-align: center;" class="mb-3">
+                    <button nbButton nbStepperNext class="stepperBtns">next</button>
+                </div>
+            </nb-card>
+        </nb-step>
+        <nb-step label="Search food">
+            <nb-card class="card2">
+                <nb-card-header>
+                    <div class="row">
+                        <ul class="day-list">
+                            <li *ngFor="let d of clientFoodDetails; let index = index">
+                                <button class="stepperBtns" nbButton (click)="setDay(index+1)">
+                                    <nb-icon icon="edit"></nb-icon>Day {{index+1}}
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="width:70%">
+                            <ul class="day-list">
+                                <li><button nbButton ghost class="addBtn" (click)="anotherDay()">
+                                        <nb-icon icon="plus-outline"></nb-icon>Add another day
+                                    </button></li>
+                                <li><button nbButton ghost class="submitBtn" (click)="submitFoodDetails()">
+                                        <nb-icon icon="checkmark-outline"></nb-icon>Finalise & submit
+                                    </button></li>
+
+                            </ul>
+                            <h3>Day {{this.currentDay}}, Start here by searching for a meal
+                            </h3>
+                        </div>
+                    </div>
+
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="mainDiv">
+                        <div class="row right">
+                            <div class="col-md-12 col-lg-12">
+                                <span *ngIf="selectedFoods[currentDay-1]?.length > 0">
+                                    <h5 style="clear:right">Your selected meals: {{selectedFoods[currentDay-1]?.length}}
+                                    </h5>
+                                </span>
+                            </div>
+                            <ng-container *ngFor="let mealId of mealTypeId" style="width: 100%;">
+                                <div class="col-md-12 col-lg-12 mealType">
+                                    <h5 *ngIf="mealId == 0">Breakfast</h5>
+                                    <h5 *ngIf="mealId == 1">Lunch</h5>
+                                    <h5 *ngIf="mealId == 2">Dinner</h5>
+                                    <h5 *ngIf="mealId == 3">Snack</h5>
+                                    <button nbButton ghost class="addFoodItem" (click)="modal_open(mealId)">
+                                        <nb-icon icon="plus-outline" class="icon_plus_outline"></nb-icon>
+                                        Add meal
+                                    </button>
+                                </div>
+                                <!-- <div class="clearfix"></div> -->
+                                <div class="col-md-12 col-lg-12" *ngIf="checkMealType(mealId) == false"
+                                    style="float: left;color: #878C97; padding-bottom: 10px;">
+                                    <span>Nothing entered yet.</span> &nbsp;&nbsp;
+                                    <a (click)="modal_open('Breakfast')"><span
+                                            style="color: #109CF1; font-size: 13px;">Add meal</span></a>
+                                </div>
+                                <!-- <div class="clearfix"></div> -->
+                                <ng-container *ngFor="let food of selectedFoods[currentDay-1]; let i = index;">
+                                    <ng-container *ngIf="food.meal==mealId">
+                                        <div class="col-md-8 col-lg-8 food">
+                                            <div style="float: left;color: #878C97; padding: 5px;"
+                                                *ngIf="!food?.canEdit; else showFoodName">
+                                                <nb-icon icon="checkmark-outline" style="margin-right: 10px;"></nb-icon>
+                                                <span>{{food?.actualIntake}} g of {{food?.foodName}}</span>
+                                            </div>
+                                            <ng-template #showFoodName>
+                                                <div style="float: left;color: #878C97; padding: 5px; padding-top: 10px;">
+                                                    <span>{{food?.foodName}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <div style="float: left;color: #878C97; padding: 5px;"
+                                                *ngIf="food?.canEdit">
+                                                <input type="text" class="foodInp" [(ngModel)]="food.actualIntake"
+                                                    (keypress)="numberOnly($event)" maxlength="7">
+                                                <span>g</span>
+                                            </div>
+                                            <div style="float: right;">
+                                                <button nbButton ghost class="selFoodBtn" tooltip="<b>Approx weights:</b><br
+                                                <pre>{{food?.servingSuggestion}}</pre>" theme="light"
+                                                    placement="bottom">
+                                                    <nb-icon icon="info-outline"></nb-icon>
+                                                </button>
+                                                <button *ngIf="!food?.canEdit" nbButton ghost class="selFoodBtn"
+                                                    tooltip="Edit" theme="light" (click)="canEdit(food)">
+                                                    <nb-icon icon="edit"></nb-icon>
+                                                </button>
+                                                <button *ngIf="food?.canEdit" nbButton ghost class="selFoodBtn"
+                                                    tooltip="Close" theme="light" (click)="canEdit(food)">
+                                                    <nb-icon icon="checkmark-outline"></nb-icon>
+                                                </button>
+                                                <button nbButton ghost class="selFoodBtn" tooltip="Remove" theme="light"
+                                                    (click)="removeFood(food, i)">
+                                                    <nb-icon icon="trash"></nb-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+
+
+                        </div>
+                    </div>
+                    <div class="row"
+                        style="text-align: right; margin-bottom: 30px; padding-left: 30px; padding-right: 30px;">
+                        <div class="col-md-12">
+                            <button nbButton hero status="primary" (click)="confirm_modal_open()">SAVE DAY</button>
+
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; ">
+                        <button nbButton nbStepperPrevious class="stepperBtns mr-2">prev</button>
+                        <button nbButton nbStepperNext class="stepperBtns ml-2">next</button>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </nb-step>
+        <nb-step label="Review & Submit">
+            <nb-card>
+                <nb-card-header>
+                    <h5>Review & Submit your list of meals</h5>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="main">
+                        <div *ngIf="selectedFoods?.length > 0">
+                            <!-- <span>
+                                <b>Review your selected meals</b>
+                            </span> -->
+                            <div style="padding: 10px;margin-top: 10px;">
+                                <div *ngFor="let food of selectedFoods[currentDay-1]; let i = index;" class="food">
+                                    <div style="float: left;color: #878C97; padding: 5px;">
+                                        <nb-icon icon="checkmark-outline" style="margin-right: 20px;"></nb-icon>
+                                        <span class="foodItem">{{food?.foodGroup?.name}}</span>
+                                        <span>{{food?.actualIntake}} g of {{food?.name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p *ngIf="selectedFoods?.length === 0">
+                            No food(s) selected
+                        </p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button nbButton nbStepperPrevious class="stepperBtns mr-2">prev</button>
+                        <button nbButton [ngClass]="selectedFoods?.length === 0 ? 'submitBtnDis' : 'submitBtn'"
+                            [disabled]="selectedFoods?.length === 0" (click)="submitFoodDetails()">Submit</button>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </nb-step>
+    </nb-stepper>
+</div>
+
+<div *ngIf="showThanks">
+    <div style="text-align: center;">
+        <h3>NutriCalc</h3>
+        <nb-card>
+            <nb-card-header>
+                <div class="ptext">
+                    <p>Thank you, <b>{{clientForm.controls.firstName.value | titlecase}}</b>.</p>
+                    <p>Only {{clientFoodDetails && maxDays ? maxDays - clientFoodDetails?.length : 'NaN'}} days to go
+                        before you
+                        see your results!.</p>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="mb-5">
+                    <i class="fa fa-check-circle fa-5x icon" style="color: lightgreen;" aria-hidden="true"></i>
+                </div>
+
+                <div class="submitDiv">
+                    <button nbButton class="submitBtn" hero (click)="sendAnotherDays()">Send another
+                        day</button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div *ngIf="showFinal">
+    <div style="text-align: center;">
+        <span class="header3">NutriCalc</span>
+        <nb-card>
+            <nb-card-header>
+                <div class="ptext">
+                    <p>Thank you <b>{{clientForm.controls.firstName.value | titlecase}}</b>,
+                        We now have all your nutrition information and have submitted it to
+                        <b>{{businessInfo?.companyName | titlecase}}</b>.
+                    </p>
+                    <p>Your practitioner will be in touch with you shortly and will organize a time to review your
+                        results.</p>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="mb-5">
+                    <i class="fa fa-check-circle fa-5x icon" style="color: lightgreen;" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p>If you have any further queries please contact us at E-mail <b>{{businessInfo?.contactEmail}}</b>
+                        or Phone <b>{{businessInfo?.contactPhone}}</b>.</p>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

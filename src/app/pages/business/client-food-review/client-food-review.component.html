@@ -1,0 +1,52 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait...">
+    <nb-card-header>
+        Review Client Details
+    </nb-card-header>
+    <nb-card-body>
+
+        <!-- <div class="daySelect">
+            <div class="form-group">
+                <label class="mr-2">Select Day</label>
+                <nb-select status="primary" [(ngModel)]="selectedDay" (selectedChange)="onDaySelect(selectedDay)">
+                    <nb-option *ngFor="let day of days" [value]="day">{{day}}</nb-option>
+                </nb-select>
+            </div>
+        </div> -->
+
+        <div class="foodData" *ngIf="clientFoodData?.length > 0">
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Food Group</th>
+                    <th>Food</th>
+                    <th>Food Intake</th>
+                    <th>Serving Suggestions</th>
+                </tr>
+
+                <tr *ngFor="let food of clientFoodData">
+                    <td>{{food?.day}}</td>
+                    <td>{{food?.food?.foodGroup?.name | titlecase}}</td>
+                    <td>{{food?.food?.name | titlecase}}</td>
+                    <td><input nbInput style="width: 100%;text-align: center;" maxlength="7"
+                            [(ngModel)]="food.actualIntake" placeholder="Food Intake">
+                    </td>
+                    <!-- <td>{{food?.food?.servingSuggestionLarge}}</td>
+                    <td>{{food?.food?.servingSuggestionMedium}}</td>
+                    <td>{{food?.food?.servingSuggestionSmall}}</td> -->
+                <td>
+                    <button nbButton ghost class="foodInfo" tooltip="<b>Approx weights:</b><br
+                    <pre>{{food?.food?.servingSuggestion}}</pre>" theme="light"
+                    placement="bottom">
+                    <nb-icon icon="info-outline"></nb-icon>
+                    </button>
+                </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="btnDiv mt-3" *ngIf="clientFoodData?.length > 0">
+            <button nbButton fullWidth hero class="submit" (click)="submitFood()">Submit</button>
+        </div>
+    </nb-card-body>
+</nb-card>

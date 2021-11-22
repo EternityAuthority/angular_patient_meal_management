@@ -1,0 +1,26 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait...">
+    <nb-card-header>
+        Foods List
+        <button type="submit" (click)="addFood()" class="btn addBtn">Add Food</button>
+    </nb-card-header>
+
+    <nb-card-body>
+        <div class="searchBox">
+            <div class="form-group">
+                <input nbInput id="name" [status]="'primary'" #fName class="form-control"
+                    placeholder="Search by food name">
+            </div>
+            <nb-select status="primary" [(ngModel)]="foodGroupId">
+                <nb-option *ngFor="let group of foodGroups" [value]="group.id"> {{ group.name }}</nb-option>
+            </nb-select>
+
+            <button nbButton status="primary" (click)="getFoodsList(fName.value, foodGroupId)" hero>Search</button>
+
+            <button nbButton status="primary" (click)="refreshSearch(fName)" hero>Clear</button>
+        </div>
+        <ng2-smart-table class="order-smart-table" [settings]="settings" [source]="source" (edit)="onEdit($event)"
+            (delete)="onDelete($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

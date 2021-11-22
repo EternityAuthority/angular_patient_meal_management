@@ -1,0 +1,389 @@
+/*!
+ * Copyright (c) Akveo 2019. All Rights Reserved.
+ * Licensed under the Single Application / Multi Application License.
+ * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+ */
+ @import '../../../@theme/styles/themes';
+ @import '~@nebular/theme/styles/core/mixins';
+ @include nb-install-component() {
+
+   nb-select {
+     width: 20rem;
+   }
+
+   nb-select {
+     display: block;
+   }
+
+   .container {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-around;
+   }
+
+   :host {
+     button {
+       @include nb-ltr(margin, 0 0.75rem 0 0);
+       @include nb-rtl(margin, 0 0 0 0.75rem);
+     }
+   }
+ }
+.infoCard nb-card-header{
+  text-align: center;
+}
+
+
+.day-list { 
+  li {
+    display: inline;
+    list-style-type: none;
+    margin-right: 34px;
+    }
+    li a {
+      text-decoration: none;
+      }
+    li a:active {
+    background-color: #E1F0FF;
+    text-decoration: underline;
+    }
+
+}
+//  nb-card nb-card-header{
+//      text-align: center;
+//  }
+
+ .btn{
+  color: white !important;
+  background: #00b8ff !important;
+ }
+
+.container{
+    width: 80%;
+}
+
+.header{
+    color: #109CF1;
+    font-size: 30px;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+.header2{
+    color: #109CF1;
+    font-size: 30px;
+    padding: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.header3{
+    color: #109CF1;
+    font-size: 30px;
+    padding: 10px;
+    margin-bottom: 15px !important;
+    display: inline-block;
+    font-weight: 600
+}
+
+.searchIcon{
+    color: #C2CFE0;
+    padding: 10px;
+}
+
+.searchbox{
+    padding: 10px;
+    margin-top: 15px;
+    background: #F5F8FA;
+    border-radius: 5px;
+}
+
+.card2{
+  min-height: 300px;
+}
+
+.card1 h4, .card2 h4{
+    margin-top: 15px;
+}
+
+.card1 input, .card2 .searchInp{
+    margin-left: 15px;
+    border: 1px solid #F5F8FA;
+    color: #A4B1C4;
+    background: #F5F8FA;
+    width: 80%;
+    padding: 10px;
+}
+
+.card1 input:focus, .card2 .searchInp:focus{
+   outline: none;
+}
+
+.card1 input::placeholder, .card2 .searchInp::placeholder{
+    color: #A4B1C4;
+    font-weight: 600;
+ }
+
+ .hiw{
+     color: #CAD1DD;
+     margin-top: 10px;
+     margin-left: 15px;
+     display: inline-block;
+ }
+
+ .threeCards{
+     display: flex;
+     margin-top: 25px;
+     margin-bottom: 40px;
+ }
+
+ .threeCardBox{
+    height: 340px;
+    width: 33%;
+    margin-right: 15px;
+    margin-left: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+ }
+
+ .threeCardBox:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ }
+
+ .iconBox{
+    height: 50%;
+    text-align: center;
+    padding: 10px;
+    color: #109CF1;
+ }
+
+ .icon{
+    margin-top: 35px;
+ }
+
+ .boxContent{
+    padding-left: 20px;
+    padding-right: 20px;
+ }
+
+
+ .mainDiv{
+     display: flex;
+ }
+
+ .right{
+   
+     padding: 15px;
+     margin-left: 10px;
+ }
+
+ .clearfix {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+  .food{
+    padding-bottom: 3px;
+    font-size: 14px;
+   }
+
+  .foodItem{
+    margin-right: 25px;
+    border-radius: 5px;
+    color: white;
+    background: #109CF1;
+    padding: 5px 10px 5px 10px;
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+  }
+
+  .addFoodItem{
+    font-weight: 100 !important;
+    margin-right: 25px;
+    border-radius: 20px !important;
+    color: white !important;
+    background-color: black !important;
+    padding: 8px 10px 8px 10px !important;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    font-size: 13px !important;
+    text-transform: none !important;
+  }
+
+  .mealType h5{
+    position: relative;
+    float: left;
+  }
+
+  .mealType .addFoodItem{
+    position: relative;
+    float: left;
+    margin-left: 40px;
+  }
+
+  .icon_plus_outline{
+    width: 15px !important;
+    height: 15px !important;
+    margin-right: 0px !important;
+    margin-top: auto !important;
+  }
+
+  .foodInp{
+    width: 50px;
+    height: 30px;
+    padding: 2px 2px 5px;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid #CFD9E6;
+    margin-right: 5px;
+   
+  }
+
+  .addFood{
+    color: #5EDE98 !important;
+  }
+
+  .foodInfo{
+    color: darkgrey !important;
+  }
+
+  .selFoodBtn{
+   color: #C2CFE0 !important;
+   padding: 5px 10px !important;
+  }
+
+  #fil{
+    height: 25px;
+    width: 45px;
+    border: none;
+    color: #00b8ff;
+  }
+
+  #fil optgroup{  
+    border: 1px solid red; 
+   }
+
+   .submitDiv{
+    margin: auto !important;
+    width: 20% !important;
+   }
+
+   .submitBtn{
+    color: white !important;
+    background: #109CF1 !important;
+   }
+
+   .submitBtnDis{
+    color: white !important;
+    background: lightgrey !important;
+   }
+
+   .ptext p{
+     font-size: 25px;
+   }
+
+   .stepperBtns{
+    //  width: 150px;
+     color: #109CF1 !important;
+     background: white !important;
+     border: 2px solid #109CF1 !important;
+     margin-bottom: 10px;
+   }
+   .submitBtn{
+    //  width: 150px;
+     color: #fa0 !important;
+     background: white !important;
+     border: 2px solid #fa0 !important;
+   }
+   .addBtn{
+    //  width: 150px;
+     color: #00d68f !important;
+     background: white !important;
+     border: 2px solid #00d68f !important;
+   }
+   /*
+      Labels
+   */
+   .form-group {
+     label {
+      font-size: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+     }
+   }
+
+   /*
+      Radio Button Styling
+   */
+   $bgSelected: #00aec7;
+   $bgNormal: #78d2e3;
+   $borderWidth: 1px;
+// #d764ee
+     
+input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+  background: $bgNormal;
+}
+
+.radio-label {
+  display: inline-block;
+  color: $bgSelected;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 20px;
+  margin-bottom: 0px !important;  
+  font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    display: inline-block;
+    width: 144px;
+    text-align: center;
+    padding-top: 17px;
+    padding-bottom: 15px;
+}
+
+
+input[type=radio]:checked + label{
+  color: #fff;
+  background: $bgSelected;
+}
+
+label + input[type=radio] + label {
+  border-left: solid $borderWidth $bgNormal;
+}
+.radio-group {
+  border: solid $borderWidth $bgNormal;
+  display: inline-block;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.stat-panel {
+  background-color: #00aec7;
+  padding: 35px;
+  margin: 3px;
+  border-radius: 25px;
+  width: 200px;
+  display: block;
+  h3, h1, p {
+    color: #fff;
+  }
+  h1 {
+    font-size: 55px;
+    margin: 5px;
+  }
+  h3 {
+    font-size: medium;
+    border-bottom: #fff solid 3px;
+  }
+  p {
+    font-size: 15px;
+    margin: 0;
+  }
+}

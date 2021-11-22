@@ -1,0 +1,87 @@
+<nb-card>
+    <div class="invoice-box" id="invoiceDet">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <span>NutriCalc</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                <b>Date: {{data?.startDate | date:'dd/MM/yyyy'}}</b><br>
+                                <b>{{currentUser?.companyName}}</b><br>
+                                <b>{{currentUser?.contactFirstName}} {{currentUser?.contactLastName}}</b><br>
+                                <b>{{currentUser?.contactEmail}}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>
+                    Payment Method
+                </td>
+
+                <td>
+                    Card No.
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td>
+                    Card
+                </td>
+
+                <td>
+                    {{data?.billedTo}}
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>
+                    Description
+                </td>
+
+                <td>
+                    Price
+                </td>
+            </tr>
+
+            <tr class="item">
+                <td>
+                    Plan - {{data?.planName}}
+                </td>
+
+                <td>
+                    ${{data?.Amount}}
+                </td>
+            </tr>
+
+            <tr class="total">
+                <td></td>
+
+                <td>
+                    Total: ${{data?.Amount}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <nb-card-footer>
+        <div style="text-align: center;">
+            <button class="btnNo" (click)="cancel()"><b>No</b></button>
+
+            <button class="btnYes" (click)="download()"><b>Download</b></button>
+        </div>
+    </nb-card-footer>
+</nb-card>

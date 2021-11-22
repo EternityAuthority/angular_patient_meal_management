@@ -1,0 +1,13 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+nbSpinnerMessage="Please wait...">
+  <nb-card-header>
+    Nutrients List
+    <button type="submit" (click)="addNutrient()" class="btn">Add Nutrient</button>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table class="order-smart-table" [settings]="settings" [source]="source" (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

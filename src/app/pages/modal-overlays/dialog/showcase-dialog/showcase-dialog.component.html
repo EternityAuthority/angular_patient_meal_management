@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) Akveo 2019. All Rights Reserved.
+  ~ Licensed under the Single Application / Multi Application License.
+  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+  -->
+<nb-card class="card1">
+  <nb-card-header>
+    <span *ngIf="title == 0">Breakfast</span>
+    <span *ngIf="title == 1">Lunch</span>
+    <span *ngIf="title == 2">Dinner</span>
+    <span *ngIf="title == 3">Snack</span>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="searchbox">
+      <span class="fa fa-search form-control-feedback searchIcon"></span>
+      <input type="text" class="searchInp" name="search" #srchkey placeholder="Search for meal or ingredients"
+        autocomplete="off">
+    </div>
+    <span *ngIf="srchkey?.value != ''">
+      <h5>Search results for "{{srchkey?.value}}"</h5>
+    </span>
+    <div>
+      <div *ngFor="let food of foods; let i = index;" class="food">
+        <div [ngStyle]="{'display': food.selected === true ? 'none': ''}" style="float: left;">
+          <span class="foodItem">{{food?.foodGroupName}}</span>
+          <span style="vertical-align: top;">{{food?.foodName}}</span>
+        </div>
+        <div style="float: right;">
+          <input [ngStyle]="{'display': food.selected === true ? 'none': ''}" type="text" [disabled]="food.selected"
+            class="foodInp" [(ngModel)]="food.actualIntake" maxlength="7" (keypress)="numberOnly($event)">
+          <span [ngStyle]="{'display': food.selected === true ? 'none': ''}">g</span>
+          <button nbButton ghost class="foodInfo" tooltip="<b>Approx weights:</b><br
+                    <pre>
+                        {{food?.servingSuggestion}} </pre>" theme="light" placement="bottom"
+            [ngStyle]="{'display': food.selected === true ? 'none': ''}">
+            <nb-icon icon="info-outline"></nb-icon>
+          </button>
+          <button nbButton ghost class="addFood" (click)="addFood(food)"
+            [ngStyle]="{'display': food.selected === true ? 'none': ''}">
+            <nb-icon icon="plus-circle-outline"></nb-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="primary" (click)="dismiss()" style="margin-right: 20px;">Dismiss Dialog</button>
+    <button nbButton status="success" (click)="submit()">Submit</button>
+  </nb-card-footer>
+</nb-card>

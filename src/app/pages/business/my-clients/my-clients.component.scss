@@ -1,0 +1,108 @@
+/*!
+ * Copyright (c) Akveo 2019. All Rights Reserved.
+ * Licensed under the Single Application / Multi Application License.
+ * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
+ */
+
+ @import '../../../@theme/styles/themes';
+
+ @include nb-install-component() {
+   nb-card-body {
+     min-height: 500px;
+   }
+ 
+   nb-card {
+     transform: translate3d(0, 0, 0);
+   }
+ 
+   ::ng-deep .client-smart-table {
+     .form-control {
+       color: nb-theme(form-control-color);
+     }
+
+     .testClass{
+       color: #00b8ff;
+     }
+
+     .enb{
+      border-radius: 7px;
+      width: 120px;
+      border: 2px solid #39ADF3;
+      background: #CFEBFC;
+      color: #39ADF3;
+      font-weight: 600;
+     }
+
+     .dis{
+      border-radius: 7px;
+      width: 120px;
+      border: 2px solid #CCD7E5;
+      background: #F2F5F8;
+      color: #C4D0E1;
+      font-weight: 600;
+      margin: 5px;
+     }
+
+     .pdf{
+      border-radius: 7px;
+      width: 120px;
+      border: 2px solid #F15F6A;
+      background: #FFD8DF;
+      color: #FF6B86;
+      font-weight: 600;
+      margin: 5px;
+     }
+
+     .rev{
+      border-radius: 7px;
+      width: 120px;
+      border: 2px solid #39ADF3;
+      background: #CFEBFC;
+      color: #39ADF3;
+      font-weight: 600;
+      margin: 5px;
+     }
+
+     .report{
+      border-radius: 7px;
+      width: 120px;
+      border: 2px solid #39ADF3;
+      background: #CFEBFC;
+      color: #39ADF3;
+      font-weight: 600;
+      margin: 5px;
+     }
+
+     .stsProgress, .stsDone{
+       text-align: center;
+       width: 100px;
+     }
+
+     .stsProgress{
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      text-align: center;
+      border-radius: 5px;
+      color: white;
+      background: #C2CFE0;
+     }
+
+     .stsDone{
+      padding-right: 30px;
+      padding-left: 30px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      border-radius: 5px;
+      color: white;
+      background: #2ED47A;
+     }
+   }
+ }
+ 
+ nb-card button{
+   float: right;
+   color: white !important;
+   background: #00b8ff !important;
+ }

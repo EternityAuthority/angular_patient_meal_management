@@ -1,0 +1,270 @@
+<div class="container" [ngStyle]="{'display': showStepper === true ? 'block' : 'none'}">
+    <div class="header">
+        <span><b>Nutrient Calculator</b></span>
+    </div>
+
+    <nb-stepper #stepper>
+        <nb-step label="Get Started">
+            <nb-card class="card1">
+                <nb-card-header>
+                    <!-- <h4>Start here by searching for a meal</h4>
+                    <div class="searchbox">
+                        <span class="fa fa-search form-control-feedback searchIcon"></span>
+                        <input type="text" name="search" placeholder="Search for meal or ingredients">
+                    </div> -->
+                    <h4>How it works?</h4>
+                </nb-card-header>
+
+                <nb-card-body>
+                    <!-- <span class="hiw"><b>How it works</b></span> -->
+                    <div class="threeCards">
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-search fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>1. Search for meals</b></span><br>
+                                <br>
+                                <span>Start by searching for popular meals using our smart global search for nutrients
+                                    and meals.</span>
+                            </div>
+                        </div>
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-list-ul fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>2. Build your meals list</b></span><br><br>
+                                <span>Quickly add meals to your personal list. you can check out our info icons for more
+                                    details.</span>
+                            </div>
+                        </div>
+                        <div class="threeCardBox">
+                            <div class="iconBox">
+                                <i class="fa fa-check-circle fa-5x icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="boxContent">
+                                <span style="font-size: 20px;"><b>3. Review and send</b></span><br><br>
+                                <span>Review your list and send it over. Your nutritionist will be in touch with some
+                                    awesome reports.</span>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+
+                <div style="text-align: center;" class="mb-3">
+                    <button nbButton nbStepperNext class="stepperBtns">next</button>
+                </div>
+            </nb-card>
+        </nb-step>
+        <nb-step label="Search food">
+            <nb-card class="card2">
+                <nb-card-header>
+                    <div class="row">
+                        <ul class="day-list">
+                            <li *ngFor="let d of clientFoodDetails; let index = index">
+                                <button class="stepperBtns" nbButton (click)="setDay(index+1)">
+                                    <nb-icon icon="edit"></nb-icon>Day {{index+1}}
+                                  </button>
+                            </li>
+                        </ul>
+                    </div>             
+                    <div style="display: flex;">                   
+                        <div style="width:70%">
+                            <ul class="day-list">
+                                <li><button class="addBtn" nbButton>
+                                    <nb-icon icon="plus-outline"></nb-icon>Add another day
+                                  </button></li>
+                                <li><button class="submitBtn" nbButton>
+                                    <nb-icon icon="checkmark-outline"></nb-icon>Finalise & submit
+                                  </button></li>
+                            </ul>
+                            <h3>Day {{this.currentDay}}, Start here by searching for a meal 
+                            </h3>
+                        </div>
+                       
+                        <div style="width: 30%;">
+                            <span style="float: right;display: inline-block;padding: 10px;">
+                                <label> Category: </label>
+                                <select id="fil" [(ngModel)]="currentCategory"
+                                    (ngModelChange)="searchFoods(srchkey?.value)">
+                                    <option value="All">All</option>
+                                    <option value="Food">Food</option>
+                                    <option value="FoodGroup">FoodGroup</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="searchbox">
+                        <span class="fa fa-search form-control-feedback searchIcon"></span>
+                        <input type="text" class="searchInp" name="search" #srchkey
+                            placeholder="Search for meal or ingredients" autocomplete="off">
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="mainDiv">
+                        <div class="left">
+                            <span *ngIf="srchkey?.value != ''">
+                                <h5>Search results for "{{srchkey?.value}}"</h5>
+                            </span>
+                            <div>
+                                <div *ngFor="let food of foods; let i = index;" class="food">
+                                    <div style="float: left;">
+                                        <span class="foodItem">{{food?.foodGroup.name}}</span>
+                                        <span style="vertical-align: top;">{{food?.name}}</span>
+                                    </div>
+                                    <div style="float: right;">
+                                        <input [ngStyle]="{'display': food.selected === true ? 'none': ''}" type="text"
+                                            [disabled]="food.selected" class="foodInp" [(ngModel)]="food.actualIntake"
+                                            maxlength="7" (keypress)="numberOnly($event)">
+                                        <span [ngStyle]="{'display': food.selected === true ? 'none': ''}">g</span>
+                                        <button nbButton ghost class="foodInfo" tooltip="<b>Approx weights:</b><br
+                                            <pre>
+                                                {{food?.servingSuggestion}} </pre>" theme="light"
+                                            placement="bottom"
+                                            [ngStyle]="{'display': food.selected === true ? 'none': ''}">
+                                            <nb-icon icon="info-outline"></nb-icon>
+                                        </button>
+                                        <button nbButton ghost class="addFood" (click)="addFood(food)"
+                                            [ngStyle]="{'display': food.selected === true ? 'none': ''}">
+                                            <nb-icon icon="plus-circle-outline"></nb-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <span *ngIf="selectedFoods?.length > 0">
+                                <h5>Your selected meals: {{selectedFoods?.length}}</h5>
+                            </span>
+                            <div>
+                                <div *ngFor="let food of selectedFoods; let i = index;" class="food">
+                                    <div style="float: left;color: #878C97; padding: 5px;" *ngIf="!food?.canEdit">
+                                        <nb-icon icon="checkmark-outline" style="margin-right: 10px;"></nb-icon>
+                                        <span>{{food?.actualIntake}} g of {{food?.name}}</span>
+                                    </div>
+                                    <div style="float: left;color: #878C97; padding: 5px;" *ngIf="food?.canEdit">
+                                        <input type="text" class="foodInp" [(ngModel)]="food.actualIntake" (keypress)="numberOnly($event)"
+                                            maxlength="7">
+                                        <span>g</span>
+                                    </div>
+                                    <div style="float: right;">
+                                        <button nbButton ghost class="selFoodBtn" tooltip="<b>Approx weights:</b><br
+                                        <pre>{{food?.servingSuggestion}}</pre>" theme="light"
+                                        placement="bottom">
+                                        <nb-icon icon="info-outline"></nb-icon>
+                                        </button>
+                                        <button *ngIf="!food?.canEdit" nbButton ghost class="selFoodBtn" tooltip="Edit"
+                                                theme="light" (click)="canEdit(food)">
+                                            <nb-icon icon="edit"></nb-icon>
+                                        </button>
+                                        <button *ngIf="food?.canEdit" nbButton ghost class="selFoodBtn" tooltip="Close"
+                                                theme="light" (click)="canEdit(food)">
+                                            <nb-icon icon="checkmark-outline"></nb-icon>
+                                        </button>
+                                        <button nbButton ghost class="selFoodBtn" tooltip="Remove" theme="light"
+                                                (click)="removeFood(food, i)">
+                                            <nb-icon icon="trash"></nb-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button nbButton nbStepperPrevious class="stepperBtns mr-2">prev</button>
+                        <button nbButton nbStepperNext class="stepperBtns ml-2">next</button>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </nb-step>
+        <nb-step label="Review & Submit">
+            <nb-card>
+                <nb-card-header>
+                    <h5>Review & Submit your list of meals</h5>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="main">
+                        <div *ngIf="selectedFoods?.length > 0">
+                            <!-- <span>
+                                <b>Review your selected meals</b>
+                            </span> -->
+                            <div style="padding: 10px;margin-top: 10px;">
+                                <div *ngFor="let food of selectedFoods; let i = index;" class="food">
+                                    <div style="float: left;color: #878C97; padding: 5px;">
+                                        <nb-icon icon="checkmark-outline" style="margin-right: 20px;"></nb-icon>
+                                        <span class="foodItem">{{food?.foodGroup?.name}}</span>
+                                        <span>{{food?.actualIntake}} g of {{food?.name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p *ngIf="selectedFoods?.length === 0">
+                            No food(s) selected
+                        </p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button nbButton nbStepperPrevious class="stepperBtns mr-2">prev</button>
+                        <button nbButton [ngClass]="selectedFoods?.length === 0 ? 'submitBtnDis' : 'submitBtn'"
+                            [disabled]="selectedFoods?.length === 0" (click)="submitFoodDetails()">Submit</button>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </nb-step>
+    </nb-stepper>
+</div>
+
+<div *ngIf="showThanks">
+    <div style="text-align: center;">
+        <h3>NutriCalc</h3>
+        <nb-card>
+            <nb-card-header>
+                <div class="ptext">
+                    <p>Thank you, <b>{{clientForm.controls.firstName.value | titlecase}}</b>.</p>
+                    <p>Only {{clientFoodDetails && maxDays ? maxDays - clientFoodDetails?.length : 'NaN'}} days to go
+                        before you
+                        see your results!.</p>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="mb-5">
+                    <i class="fa fa-check-circle fa-5x icon" style="color: lightgreen;" aria-hidden="true"></i>
+                </div>
+
+                <div class="submitDiv">
+                    <button nbButton class="submitBtn" hero (click)="sendAnotherDays(srchkey)">Send another
+                        day</button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div *ngIf="showFinal">
+    <div style="text-align: center;">
+        <span class="header3">NutriCalc</span>
+        <nb-card>
+            <nb-card-header>
+                <div class="ptext">
+                    <p>Thank you <b>{{clientForm.controls.firstName.value | titlecase}}</b>,
+                        We now have all your nutrition information and have submitted it to
+                        <b>{{businessInfo?.companyName | titlecase}}</b>.</p>
+                    <p>Your practitioner will be in touch with you shortly and will organize a time to review your
+                        results.</p>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="mb-5">
+                    <i class="fa fa-check-circle fa-5x icon" style="color: lightgreen;" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p>If you have any further queries please contact us at E-mail <b>{{businessInfo?.contactEmail}}</b>
+                        or Phone <b>{{businessInfo?.contactPhone}}</b>.</p>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

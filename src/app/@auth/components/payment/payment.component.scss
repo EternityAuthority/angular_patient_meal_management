@@ -1,0 +1,159 @@
+// body {
+//     background: #f5f5f5
+// }
+
+// .rounded {
+//     border-radius: 1rem
+// }
+
+// .nav-pills .nav-link {
+//     color: #555
+// }
+
+// .nav-pills .nav-link.active {
+//     color: white
+// }
+
+// input[type="radio"] {
+//     margin-right: 5px
+// }
+
+// .bold {
+//     font-weight: bold
+// }
+
+// .row{
+//     margin-top: 20px;
+//     margin-bottom: 20px;
+// }
+
+// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+body {
+    background-color: #5165ff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif
+}
+
+.modal-body {
+    background-color: #fff;
+    border-color: #fff
+}
+
+.close {
+    color: #000;
+    cursor: pointer
+}
+
+.close:hover {
+    color: #000
+}
+
+.form-check-input:checked {
+    background-color: #00b8ff;
+    border-color: #00b8ff
+}
+
+.form-check-input:focus {
+    border-color: #8bbafe;
+    outline: 0;
+    box-shadow: none
+}
+
+label.radio {
+    cursor: pointer
+}
+
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio span {
+    padding: 7px 12px;
+    border: 2px solid #00b8ff;
+    display: inline-block;
+    color: #00b8ff;
+    border-radius: 3px;
+    text-transform: capitalize
+}
+
+label.radio input:checked+span {
+    border-color: #00b8ff;
+    background-color: #00b8ff;
+    color: #fff
+}
+
+.fee {
+    padding: 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.2);
+    margin-right: 8px
+}
+
+label.radio1 {
+    cursor: pointer;
+    width: 100%;
+    margin-right: 7px
+}
+
+label.radio1 input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio1 span {
+    padding: 20px 12px;
+    border: 2px solid #00b8ff;
+    display: inline-block;
+    color: #00b8ff;
+    border-radius: 3px;
+    text-transform: capitalize;
+    width: 100%
+}
+
+label.radio1 input:checked+span {
+    border-color: #00b8ff;
+    background-color: #00b8ff;
+    color: #fff
+}
+
+.form-control {
+    border: 2px solid #ced4da
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #00b8ff
+}
+
+.pay {
+    color: white;
+    background-color: #00b8ff;
+    border-color: white;
+    border-radius: 3px;
+    padding: 8px
+}
+
+.pay:hover {
+    color: #00b8ff;
+    background-color: white;
+    border-color: #00b8ff;
+    border-radius: 3px;
+    padding: 8px
+}
+
+.cancel {
+    text-decoration: none;
+    color: #00b8ff
+}

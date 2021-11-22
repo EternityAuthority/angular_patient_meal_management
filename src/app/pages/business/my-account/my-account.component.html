@@ -1,0 +1,225 @@
+<nb-card [nbSpinner]="load?.getLoadingStatus()" nbSpinnerStatus="danger" nbSpinnerSize="giant"
+    nbSpinnerMessage="Please wait...">
+    <nb-card-header>My Account</nb-card-header>
+    <nb-card-body>
+        <div [formGroup]="businessForm" class="container1">
+            <div class="column">
+                <div class="firstCol">
+                    <img *ngIf="businessForm.controls?.photoPath.value === null || businessForm.controls?.photoPath.value === ''"
+                        src="../../../../assets/images/defaultprofile.jpg">
+                    <img *ngIf="businessForm.controls?.photoPath.value != null && businessForm.controls?.photoPath.value != ''"
+                        [src]="'/Images/' + businessForm.controls?.photoPath.value" style="object-fit: cover;">
+                    <div class="profContainer">
+                        <div class="upload-btn-wrapper uploadbtn">
+                            <button type="button" class="profilePic">upload<i class="fa fa-upload ml-1"
+                                    aria-hidden="true"></i>
+                                <input type="file" #file accept="image/png,image/jpeg,image/jpg"
+                                    (change)="uploadImage($event, file)">
+                            </button>
+                        </div>
+                    </div>
+                    <span class="admin">admin</span>
+                </div>
+
+                <div>
+                    <button fullWidth class="pswdBtn" nbButton status="primary"
+                        [routerLink]="['/pages/business/update-password']">Change
+                        Password</button>
+                </div>
+
+                <div>
+                    <button fullWidth nbButton status="primary" class="pswdBtn" [disabled]="!businessForm.valid"
+                        (click)="saveDetails()" hero>{{'Update my account info' | lowercase}}</button>
+                </div>
+
+                <div>
+                    <button fullWidth class="pswdBtn" nbButton status="primary"
+                        [routerLink]="['/pages/business/View-Invoices', businessForm.controls?.id.value]">View
+                        Invoices</button>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="websiteUrl">Website</label>
+                    <input nbInput id="websiteUrl" formControlName="websiteUrl" minlength="2" maxlength="50"
+                        [status]="(websiteUrl?.errors?.required || websiteUrl?.hasError('minlength') || websiteUrl?.hasError('maxlength')) && websiteUrl.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Website Url">
+                    <ngx-validation-message label="Website url"
+                        [showRequired]="websiteUrl?.errors?.required  && websiteUrl.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="qualification">Qualifications</label>
+                    <input nbInput id="qualification" formControlName="qualification" minlength="2" maxlength="50"
+                        [status]="(qualification?.errors?.required || qualification?.hasError('minlength') || qualification?.hasError('maxlength')) && qualification.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Qualifications">
+                    <ngx-validation-message label="Qualifications"
+                        [showRequired]="qualification?.errors?.required  && qualification.touched">
+                    </ngx-validation-message>
+                </div> -->
+
+            </div>
+            <div class="vl"></div>
+            <div class="column">
+                <p><b>Account info</b></p>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input nbInput id="firstName" formControlName="contactFirstName" minlength="1" maxlength="50"
+                        [status]="(contactFirstName?.errors?.required || contactFirstName?.hasError('minlength') || contactFirstName?.hasError('maxlength')) && contactFirstName.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="First name">
+                    <ngx-validation-message label="First Name"
+                        [showRequired]="contactFirstName?.errors?.required  && contactFirstName.touched"
+                        [showMinLength]="contactFirstName?.hasError('minlength') && contactFirstName.touched"
+                        [showMaxLength]="contactFirstName?.hasError('maxlength') && contactFirstName.touched"
+                        minLength=1 maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactLastName">Last Name</label>
+                    <input nbInput id="contactLastName" formControlName="contactLastName" minlength="1" maxlength="50"
+                        [status]="(contactLastName?.errors?.required || contactLastName?.hasError('minlength') || contactLastName?.hasError('maxlength')) && contactLastName.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Last name">
+                    <ngx-validation-message label="Last Name"
+                        [showRequired]="contactLastName?.errors?.required  && contactLastName.touched"
+                        [showMinLength]="contactLastName?.hasError('minlength') && contactLastName.touched"
+                        [showMaxLength]="contactLastName?.hasError('maxlength') && contactLastName.touched" minLength=1
+                        maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input nbInput id="email" formControlName="contactEmail" #em minlength="1" maxlength="100"
+                        [status]="(contactEmail?.errors?.required || contactEmail?.hasError('minlength') || contactEmail?.hasError('maxlength')) && contactEmail.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Email">
+                    <ngx-validation-message label="Email"
+                        [showRequired]="contactEmail?.errors?.required  && contactEmail.touched"
+                        [showPattern]="contactEmail?.errors?.pattern  && contactEmail.touched"
+                        [showMinLength]="contactEmail?.hasError('minlength') && contactEmail.touched"
+                        [showMaxLength]="contactEmail?.hasError('maxlength') && contactLastName.touched" minLength=1
+                        maxLength=100>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Contact</label>
+                    <input nbInput id="contact" formControlName="contactPhone" maxlength="50" minlength="8"
+                        [status]="(contactPhone?.errors?.required || contactPhone?.hasError('minlength') || contactPhone?.hasError('maxlength')) && contactPhone.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Contact">
+                    <ngx-validation-message label="Contact"
+                        [showRequired]="contactPhone?.errors?.required  && contactPhone.touched"
+                        [showPattern]="contactPhone?.errors?.pattern && contactPhone.touched"
+                        [showMinLength]="contactPhone?.hasError('minlength') && contactPhone.touched"
+                        [showMaxLength]="contactPhone?.hasError('maxlength') && contactPhone.touched" minLength=8
+                        maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="websiteUrl">Website</label>
+                    <input nbInput id="websiteUrl" formControlName="websiteUrl" minlength="2" maxlength="50"
+                        [status]="(websiteUrl?.errors?.required || websiteUrl?.hasError('minlength') || websiteUrl?.hasError('maxlength')) && websiteUrl.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Website Url">
+                    <ngx-validation-message label="Website url"
+                        [showRequired]="websiteUrl?.errors?.required  && websiteUrl.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="qualification">Qualifications</label>
+                    <input nbInput id="qualification" formControlName="qualification" minlength="2" maxlength="50"
+                        [status]="(qualification?.errors?.required || qualification?.hasError('minlength') || qualification?.hasError('maxlength')) && qualification.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Qualifications">
+                    <ngx-validation-message label="Qualifications"
+                        [showRequired]="qualification?.errors?.required  && qualification.touched">
+                    </ngx-validation-message>
+                </div>
+
+                <!-- <div>
+                    <button fullWidth nbButton status="primary" class="editBtn" [disabled]="!businessForm.valid"
+                        (click)="saveDetails()" hero>{{'Update my account info' | lowercase}}</button>
+                </div> -->
+            </div>
+            <div class="vl"></div>
+            <div class="column">
+                <p><b>Your plan: {{getPlanName() | uppercase}}</b></p>
+
+                <div class="form-group">
+                    <label for="name">Business Name</label>
+                    <input nbInput id="name" formControlName="companyName" minlength="1" maxlength="50"
+                        [status]="(companyName?.errors?.required || companyName?.hasError('minlength') || companyName?.hasError('maxlength')) && companyName.touched ? 'danger' : 'primary'"
+                        class="form-control" placeholder="Business name" disabled>
+                    <ngx-validation-message label="Business Name"
+                        [showRequired]="companyName?.errors?.required  && companyName.touched"
+                        [showMinLength]="companyName?.hasError('minlength') && companyName.touched"
+                        [showMaxLength]="companyName?.hasError('maxlength') && companyName.touched" minLength=1
+                        maxLength=50>
+                    </ngx-validation-message>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Start Date</label>
+                    <input nbInput id="date" [value]="getDate(1)" class="form-control" placeholder="Start date"
+                        disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">End Date</label>
+                    <input nbInput id="date" [value]="getDate(3,businessForm.controls?.planExpiryDate.value)"
+                        class="form-control" placeholder="End date" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Next billing date</label>
+                    <input nbInput id="date" [value]="getDate(2)" class="form-control" placeholder="Next billing date"
+                        disabled>
+                </div>
+
+                <!-- <div>
+                    <button fullWidth class="pswdBtn" nbButton status="primary"
+                        [routerLink]="['/pages/business/View-Invoices', businessForm.controls?.id.value]">View
+                        Invoices</button>
+                </div> -->
+            </div>
+        </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+
+        <div *ngFor="let plan of plans$" class="planBox"
+            [ngStyle]="{'background' : plan?.id === currentPlanId ? '#EAFAF1' : '#F2F3F5'}">
+            <div class="planContent">
+                <div
+                    [ngStyle]="{'color': plan?.description === 'Premium' ? '#2ED47A' : plan?.description === 'Starter' ? '#00b8ff' : '#FACC80'}">
+                    <b>{{plan?.description | uppercase}}</b>
+                </div>
+                <br>
+                ${{plan?.price}} / {{plan?.interval}} / users
+
+                <br>
+                <div *ngIf="plan?.description === 'Starter'">
+                    A management tool for busy professionals, {{plan?.maxCustomers}} clients included
+                </div>
+
+                <div *ngIf="plan?.description === 'Pro'">
+                    A management tool for busy professionals, {{plan?.maxCustomers}} clients included
+                </div>
+
+                <div *ngIf="plan?.description === 'Premium'">
+                    A management tool for busy professionals, {{plan?.maxCustomers}} clients included
+                </div>
+
+                <br><br>
+                <div>
+                    <button *ngIf="plan?.id != currentPlanId" fullWidth class="newplanBtn" nbButton status="primary"
+                        (click)="getClientCount(plan)">Get
+                        started</button>
+                    <button *ngIf="plan?.id === currentPlanId" fullWidth class="editBtn" nbButton status="primary">Your
+                        current plan</button>
+                </div>
+            </div>
+        </div>
+
+    </nb-card-footer>
+</nb-card>
